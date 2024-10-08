@@ -7,14 +7,11 @@
   
       <UserForm v-if="!userId || userId ===null" />
   
-      <template v-if="currentUser.group_id===null">
+      <template v-else-if="currentUser.group_id===null">
         <h2 class="text-2xl font-bold mb-4">Utilisateurs sans groupe</h2>
         <UsersWithoutGroup :users="usersWithoutGroup" />
         <GroupList :groups="groups" />
         <JoinGroup />
-  
-        <!--<h2 class="text-2xl font-bold mb-4">Membres du groupe 1</h2>
-        <GroupUsers :group="groups[0]" :users="group1Users" /> -->
       </template>
   
       <template v-else>
@@ -32,13 +29,13 @@
   import JoinGroup from '../components/JoinGroup.vue'
   import GroupUsers from '../components/GroupUsers.vue'
   import LeaveGroup from '../components/LeaveGroup.vue'
-  // import UserForm from './components/UserForm.vue'
+  import UserForm from '../components/UserForm.vue'
   
   // const userId = ref<string | null>(null)
   
   // For testing
   const currentUser = ref({
-    id: null, name: "julien", group_id: null
+    id: 54, name: "julien", group_id: 1
   })
   const userId = currentUser.value.id
   
