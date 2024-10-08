@@ -7,25 +7,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 
 	"back/models"
-	"back/routes"
+	"back/utils"
 )
 
 func TestConfigEndpoints(t *testing.T) {
-	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
-	if err != nil {
-		t.Fatalf("Failed to connect to the database: %v", err)
-	}
-	db.AutoMigrate(&models.Config{})
-
-	r := gin.Default()
-
-	routes.SetupRoutes(r, db)
+	r, _ := utils.SetupTestEnvironment()
 
 	// Test GET /config
 	w := httptest.NewRecorder()
