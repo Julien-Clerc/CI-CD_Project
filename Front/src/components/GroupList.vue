@@ -4,27 +4,32 @@
     <ul class="list-disc pl-5">
       <li v-for="group in groups" :key="group.id" class="mb-2">
         {{ group.name }}
-        <button @click="joinGroup(group.id)" class="bg-blue-500 text-white p-2 ml-4">Entrer dans le groupe</button>
+        <button @click="joinGroup(String(group.id))" class="bg-blue-500 text-white p-2 ml-4">Entrer dans le groupe</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+  import { defineProps, defineEmits } from 'vue'
+  import { storeToRefs } from 'pinia';
+  import { useUser } from '../stores/user.store';
 
-const props = defineProps<{
-  groups: {
-    id: number
-    name: string
-  }[]
-}>()
+  const props = defineProps<{
+    groups: {
+      id: number
+      name: string
+    }[]
+  }>()
 
-const emit = defineEmits<{
-  (e: 'joinGroup', groupId: number): void
-}>()
+  let { currentUser } = storeToRefs(useUser())
 
-const joinGroup = (groupId: number) => {
-  emit('joinGroup', groupId)
-}
+  const joinGroup = (groupId: string) => {
+    if (currentUser?.value) {
+      currentUser.value.group_id = groupId
+      localStorage.setItem('currentUser', JSON.stringify(currentUser.value))
+    } else {
+      console.log('current user is null')
+    }
+  }
 </script>
