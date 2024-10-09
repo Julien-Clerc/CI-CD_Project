@@ -29,7 +29,6 @@ func TestGroupEndpoints(t *testing.T) {
     assert.Equal(t, http.StatusCreated, w.Code)
     var group models.Group
     json.Unmarshal(w.Body.Bytes(), &group)
-    fmt.Println("created group:", group)
 
     // GET /groups
     w = httptest.NewRecorder()
@@ -39,7 +38,6 @@ func TestGroupEndpoints(t *testing.T) {
     assert.Equal(t, http.StatusOK, w.Code)
     var groups []models.Group
     json.Unmarshal(w.Body.Bytes(), &groups)
-    fmt.Println("groups:", groups)
     assert.Equal(t, 1, len(groups))
 
     // GET /groups/:id
@@ -51,4 +49,14 @@ func TestGroupEndpoints(t *testing.T) {
     var retrievedGroup models.Group
     json.Unmarshal(w.Body.Bytes(), &retrievedGroup)
     assert.Equal(t, group.ID, retrievedGroup.ID)
+
+    // DELETE /groups/:id
+    w = httptest.NewRecorder()
+    req, _ = http.NewRequest("DELETE", "/groups/"+fmt.Sprint(group.ID), nil)
+    r.ServeHTTP(w, req)
+
+    assert.Equal(t, http.StatusOK, w.Code)
+    var response map[string]interface{}
+    json.Unmarshal(w.Body.Bytes(), &response)
+    assert.Equal(t, "Group deleted", response["message"])
 }
