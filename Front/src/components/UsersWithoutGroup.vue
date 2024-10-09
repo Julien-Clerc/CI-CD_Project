@@ -5,14 +5,13 @@
       </ul>
     </div>
   </template>
-  
+
   <script setup lang="ts">
   defineProps <{
     users: {
-      id: number
+      id: string
       name: string
     }[]
   }>();
 
   </script>
-  

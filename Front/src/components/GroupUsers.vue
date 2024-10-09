@@ -11,12 +11,12 @@ import { defineProps } from 'vue'
 
 defineProps<{
   users: {
-    id: number
+    id: string
     name: string
-    group_id: number
+    group_id?: string
   }[]
   group: {
-    id: number
+    id: string
     name: string
   }
 }>()
