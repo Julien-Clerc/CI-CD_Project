@@ -14,7 +14,7 @@ func SetupTestEnvironment() (*gin.Engine, *gorm.DB) {
 	if err != nil {
 		panic("Failed to connect to database")
 	}
-	db.AutoMigrate(&models.User{}, &models.Config{})
+	db.AutoMigrate(&models.User{}, &models.Config{}, &models.Group{})
 
 	r := gin.Default()
 
