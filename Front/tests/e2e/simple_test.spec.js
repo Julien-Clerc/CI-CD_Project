@@ -12,5 +12,4 @@ test('should interface with the backend', async ({ request}) => {
     const response = await request.get('http://localhost:3000/config');
 
     expect(response.ok()).toBeTruthy();
-    // const responseBody = await response.json();
 })
