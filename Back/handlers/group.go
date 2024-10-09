@@ -17,15 +17,15 @@ func GetGroups(c *gin.Context, db *gorm.DB) {
 }
 
 func GetGroup(c *gin.Context, db *gorm.DB) {
-	id := c.Param("id")
-	var group models.Group
+    id := c.Param("id")
+    var group models.Group
 
-	if err := db.First(&group, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Group not found"})
-		return
-	}
+    if err := db.First(&group, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Group not found"})
+        return
+    }
 
-	c.JSON(http.StatusOK, group);
+    c.JSON(http.StatusOK, group)
 }
 
 func CreateGroup(c *gin.Context, db *gorm.DB) {

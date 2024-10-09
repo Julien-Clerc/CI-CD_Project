@@ -27,7 +27,7 @@ func TestUserEndpoints(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusCreated, w.Code)
 	var user models.User
 	json.Unmarshal(w.Body.Bytes(), &user)
 	assert.Equal(t, "Alice", user.Name)
@@ -63,4 +63,13 @@ func TestUserEndpoints(t *testing.T) {
 	var errorResponse map[string]interface{}
 	json.Unmarshal(w.Body.Bytes(), &errorResponse)
 	assert.Equal(t, "User not found", errorResponse["error"])
+
+	// Test PUT /users/:id/join-group
+	w = httptest.NewRecorder()
+	req, _ = http.NewRequest("PUT", "/users/"+fmt.Sprint(user.ID)+"/join-group?group_id=1", nil)
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	json.Unmarshal(w.Body.Bytes(), &retrievedUser)
+	assert.Equal(t, uint(1), retrievedUser.GroupID)
 }
