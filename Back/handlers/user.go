@@ -34,5 +34,5 @@ func CreateUser(c *gin.Context, db *gorm.DB) {
 		return
 	}
 	db.Create(&user)
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusCreated, user)
 }

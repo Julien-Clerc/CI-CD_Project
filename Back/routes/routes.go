@@ -14,4 +14,8 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	r.GET("/users", func(c *gin.Context) { handlers.GetUsers(c, db)})
 	r.GET("/users/:id", func(c *gin.Context) { handlers.GetUser(c, db)})
 	r.POST("/users", func(c *gin.Context) { handlers.CreateUser(c, db)})
+
+	r.GET("/groups", func(c *gin.Context) { handlers.GetGroups(c, db) })
+	r.GET("/groups/:id", func(c *gin.Context) { handlers.GetGroup(c, db) })
+	r.POST("groups", func(c *gin.Context) { handlers.CreateGroup(c, db) })
 }
