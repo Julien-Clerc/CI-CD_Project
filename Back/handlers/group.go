@@ -39,3 +39,14 @@ func CreateGroup(c *gin.Context, db *gorm.DB) {
 	db.Create(&group)
 	c.JSON(http.StatusCreated, group)
 }
+
+func DeleteGroup(c *gin.Context, db *gorm.DB) {
+    id := c.Param("id")
+
+    if err := db.Delete(&models.Group{}, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Group not found"})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Group deleted"})
+}
