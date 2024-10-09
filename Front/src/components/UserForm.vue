@@ -19,15 +19,19 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { nanoid } from 'nanoid'
 import axios from 'axios'
 
 const username = ref('')
 
 const createUser = async () => {
   try {
-    const response = await axios.post('/api/users', { name: username.value })
-    const userId = response.data.id
-    localStorage.setItem('userId', userId)
+    // const response = await axios.post('/api/users', { name: username.value })
+    // const userId = response.data.id
+    const userId = nanoid();
+    const currentUser = {id: userId, name: username.value}
+
+    localStorage.setItem('currentUser', JSON.stringify(currentUser))
     alert('Utilisateur créé avec succès!')
     // Rediriger l'utilisateur vers une autre page si nécessaire
     window.location.reload()

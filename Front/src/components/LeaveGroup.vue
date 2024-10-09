@@ -7,13 +7,22 @@
   
   <script lang="ts">
   import { defineComponent } from 'vue'
+  import { storeToRefs } from 'pinia';
+  import { useUser } from '../stores/user.store';
   
   export default defineComponent({
     name: 'LeaveGroup',
     methods: {
       leaveGroup() {
-        // Logique pour se retirer du groupe
-        console.log('Se retirer du groupe')
+        let { currentUser } = storeToRefs(useUser())
+
+        if (currentUser?.value) {
+          currentUser.value.group_id = null
+          localStorage.setItem('currentUser', JSON.stringify(currentUser.value))
+        } else {
+          console.log('current user is null')
+        }
+
       },
     },
   })
